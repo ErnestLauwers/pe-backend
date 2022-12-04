@@ -1,0 +1,20 @@
+name: Test, Docker, Release
+
+on:
+  push:
+    branches: [ main ]
+  pull_request: 
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Push Docker Image
+      run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "ernestlauwers" --password-stdin
+          docker image build -t ernestlauwers/pe-besturingsystemen2:latest .
+          docker push ernestlauwers/pe-besturingsystemen2:latest
