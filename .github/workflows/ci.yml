@@ -1,4 +1,4 @@
-name: Test, Docker, Release
+name: Docker (Build&Push)
 
 on:
   push:
@@ -16,5 +16,5 @@ jobs:
     - name: Build and Push Docker Image
       run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "ernestlauwers" --password-stdin
-          docker image build -t ernestlauwers/pe-besturingsystemen2:latestBackend .
-          docker push ernestlauwers/pe-besturingsystemen2:latestBackend
+          docker image build -t ernestlauwers/pe-backend:latestBackend .
+          docker push ernestlauwers/pe-backend:latestBackend
