@@ -1,4 +1,4 @@
-name: Docker (Build&Push)
+name: Actions
 
 on:
   push:
@@ -18,3 +18,12 @@ jobs:
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "ernestlauwers" --password-stdin
           docker image build -t ernestlauwers/pe-backend:latestBackend .
           docker push ernestlauwers/pe-backend:latestBackend
+    - name: Create Release
+      uses: CupOfTea696/gh-action-auto-release@v1.0.0
+        with:
+          title: "Release: $version"
+          tag: "v$semver"
+          draft: false
+          regex: "/^Release: #{semver}$/i"
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
